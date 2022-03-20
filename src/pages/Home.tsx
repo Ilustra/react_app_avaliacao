@@ -1,94 +1,85 @@
-import { AxiosResponse } from 'axios';
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { ReactElement } from 'react';
+import ReactDOM from 'react-dom';
+import HomePage from '../component/homepage';
 import Icon from '../component/icon';
-import { GitService } from '../component/service/GitService';
 import { BoxRow, Card, Surface, Title, Text } from '../component/styleds';
 import { User } from '../model/User';
-
-
-
-
-const Home = () => {
-
-  const [name, setname] = useState<string>('');
-  const [user, setUser] = useState<User>()
-
-  const onChangeName = (e: any) => {
-    setname(e.target.value)
-  }
-  const view = new GitService()
-  const getUser = (e: any) => {
-    console.log(e)
-    if (e.code === 'Enter' || e.type==='click')
-      view.get(name).then((response) => {
-
-        console.log('response', response.data)
-        setUser(response.data)
-      }).catch(error => {
-        console.log(error)
-      })
+import { CrudService } from '../model/utils/CurdService';
+import { View } from '../model/utils/View';
+import { GitService } from '../service/GitService';
+class Home extends View<User, string>{
+ 
+  constructor(
+    public props,
+  ) {
+    super(props, new GitService(props))
+    this.state = {
+      data: null
+    }
 
   }
 
-  return (
-    <Surface className="flex justify-center items-center flex-col border">
-      <div></div>
-      <div className='w-full flex items-center flex-col'>
-        <Title className='text-xl font-mono text-gray-700'>Welcome</Title>
-        <div style={{ width: '60%' }} className='relative w-auto flex items-center w-full '>
-          <input placeholder='digite o nome do usuário' className='p-5 rounded-md shadow-md w-full' onKeyPress={getUser} onChange={onChangeName} />
-          <button onClick={getUser} className='absolute right-0 mr-2 mt-2'><Icon>search</Icon></button>
-        </div>
+  onChangeName = async (e: any) => {
+  //  console.log(e.target.value)
+  }  
+  onGetBy = async (e: any) =>  this.getbyuser(e.target.value)
+  
+  carrousel = (data, index) => {
+    console.log(index)
+
+    return(
+      <div>
+          <img className=' h-20 w-20 rounded-full  ring-white' src={data[index].avatar_url} />
+
       </div>
+    )
+  }
+  next = (index)=>{
 
-      {user &&
-        <Card className='absolute bottom-0 p-2 w-96 m-5 rounded-md shadow-md h-96 justify-between flex flex-col'>
-          <BoxRow className='flex flex-row justify-between'>
-            <div></div>
+  }
+  back = (index)=>{
 
-            <button onClick={() => setUser(null)}><Icon>clear</Icon></button>
-          </BoxRow>
-
-
-
-          <div className='justify-center items-center flex flex-col w-full '>
-            <img className='flex inline-block h-20 w-20 rounded-full ring-2 ring-white' src={user.avatar_url} />
-            <div className='flex flex-col w-auto justify-center'>
-              <Text>{user.email}</Text>
-              <Title className='text-center text-xl'>{user.name}</Title>
-            </div>
+  }
+  render() {
+    const { data } = this.state
+    return (
+      <Surface className="flex justify-center items-center flex-col border">
+         <div id="modal"></div>
+        <div></div>
+        <div id='#modal' className='w-full flex items-center flex-col'>
+          <Title className='text-xl font-mono text-gray-700'>Welcome</Title>
+          <div style={{ width: '60%' }} className='relative w-auto flex items-center w-full '>
+            <input placeholder='digite o nome do usuário' className='p-5 rounded-md shadow-md w-full' onKeyPress={(e:any )=>{ 
+              if(e.key === "Enter")
+                   this.onGetBy(e)
+              }} onChange={(this.onChangeName)} />
+            <button onClick={()=> {}} className='absolute right-0 mr-2 mt-2'><Icon>search</Icon></button>
           </div>
-          <div className='flex flex-row justify-between p-2 items-center'>
-            <BoxRow className='flex flex-row'>
-              <Text className='items-center flex'>  {user.following} Following</Text>
-              <Text className='items-center flex ml-5'>  {user.followers} Followers</Text>
-            </BoxRow>
+        </div>
+        <div style={{width:'100%', overflow:'scroll'}} className='border'>
+        <button>
+        next
+        </button>
+        {this.state.data && this.carrousel(this.state.data, this.state.data.length / 2)}
+        <div className='flex flex-row'>
+              {this.state.data && this.state.data.map((element, index)=>{
+                return (
+                  <div className='carousel-inner relative w-full overflow-hidden'>
+                  <img className=' h-20 w-20 rounded-full  ring-white' src={element.avatar_url} />
 
-            <Link to={`/detalhes/${user.login}`} >
-              <button>+detalhes</button>
-            </Link>
+                  </div>
+                  
+                )
+              })}
+        </div>
+        </div>
 
-          </div>
-          <div className="bg-gray-100 w-full p-2  rounded-md">
-            <Text>{user.bio}</Text>
-          </div>
-          <BoxRow>
-            <Icon>assignment</Icon>
-            <a>{user.url}</a>
-          </BoxRow>
 
-          <div>
-            <Text>Repositories  {user.public_repos}</Text>
-            <Text>Desde de: {user.created_at}</Text>
-            <Text>Última Atualização: {user.updated_at}</Text>
-          </div>
-        </Card>
-      }
+        <HomePage value={this.state.data} />
+      </Surface>
+    )
+  }
 
-    </Surface>
-  );
 }
 
 export default Home;

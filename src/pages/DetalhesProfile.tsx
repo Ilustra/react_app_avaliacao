@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import Icon from '../component/icon';
-import { GitService } from '../component/service/GitService';
+
 import { BoxRow, Card, Surface, Text, Title } from '../component/styleds';
 import { Repo } from '../model/Repo';
 import { User } from '../model/User';
@@ -15,25 +15,25 @@ function DetalhesProfile(props) {
 
   const {  id } = useParams();
   
-  const view = new GitService()
+  //const view = new GitService()
   const [user, setUser] = useState<User>()
   const [repos, setRepos] = useState([])
   useEffect(() => {
-    getUser(id)
+    /*getUser(id)
     view.getRepos(id).then(response => {
       const { data } = response;
       setRepos(data)
 
     }).catch(error => {
       console.log(error)
-    })
+    })*/
   }, [])
   const getUser = (e: string) => {
-    view.get(e).then((response) => {
+    /*view.get(e).then((response) => {
       setUser(response.data)
     }).catch(error => {
       console.log(error)
-    })
+    })*/
   }
   const RenderList = (element: Repo, index) => {
     return (

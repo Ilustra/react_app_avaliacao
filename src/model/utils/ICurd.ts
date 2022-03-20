@@ -1,13 +1,12 @@
 
-
-export interface  ICrud<T, ID> {
+export interface ICrud<T, ID> {
 
 
     create(t: T): Promise<T>;
 
-    get(id: ID);
+    getById(id: ID);
 
-    getAll(): void;
+    getAll(): Promise<T>;
 
     update(t: ID): Promise<T> ;
 

@@ -1,7 +1,7 @@
 
 
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import './App.css';
 import './index.css';
@@ -14,13 +14,23 @@ import {
 import Home from './pages/Home';
 import DetalhesProfile from './pages/DetalhesProfile';
 
-export default function App() {
+export default class App extends Component {
+
+    render(){
+    
     return (
-        <BrowserRouter>
+        <>
+        <div id='modal'></div>
+            <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home/>} />
+     
+                <Route path='/' element={<Home />} />
                 <Route path='/detalhes/:id'  element={<DetalhesProfile />}/> 
+          
+  
             </Routes>
         </BrowserRouter>
-    );
+        </>
+    
+    );}
 }

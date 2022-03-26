@@ -4,8 +4,6 @@ import  {ICrud} from "./ICurd";
 import api from "../../api/api";
 export abstract class CrudService<T, ID>  implements ICrud<T, ID> {
    
-    BASEAPI = 'https://developer.github.com/v3/'
-    accesKey ='8d84e2f535msh2ecf705eb53119bp1647cbjsnc5a4f9d13869'
 
     constructor(
       protected _http: Axios,

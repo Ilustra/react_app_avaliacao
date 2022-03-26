@@ -3,9 +3,11 @@ import { Link, useParams } from 'react-router-dom';
 
 import Icon from '../component/icon';
 
-import { BoxRow, Card, Surface, Text, Title } from '../component/styleds';
+import { BoxRow, Card, Input, Bottom, Text, Title } from '../component/styleds';
 import { Repo } from '../model/Repo';
 import { User } from '../model/User';
+import { GitService } from '../service/GitService';
+
 
 
 class Props {
@@ -14,48 +16,53 @@ class Props {
 function DetalhesProfile(props) {
 
   const {  id } = useParams();
-  
-  //const view = new GitService()
+  const view = new GitService(props)
   const [user, setUser] = useState<User>()
   const [repos, setRepos] = useState([])
+
   useEffect(() => {
-    /*getUser(id)
+    
+    getUser(id)
     view.getRepos(id).then(response => {
       const { data } = response;
+      console.log(data)
       setRepos(data)
 
     }).catch(error => {
       console.log(error)
-    })*/
+    })
   }, [])
   const getUser = (e: string) => {
-    /*view.get(e).then((response) => {
+    view.getById(e).then((response) => {
       setUser(response.data)
     }).catch(error => {
       console.log(error)
-    })*/
+    })
   }
   const RenderList = (element: Repo, index) => {
     return (
-      <div style={{ width: '100%' }} key={index} className='bg-white   m-2 shadow-md p-2 flex flex-col justify-between rounded-md'>
-        <div className='flex flex-row justify-between'>
-          <div className='flex flex-col w-full'>
-            <Title>  {element.name}</Title>
-            <div className='flex flex-row justify-between w-full'>
-              <div>
-              <Text className='ml-5'> {element.watchers_count} watchers </Text>
-              <Text className='ml-5'>{element.forks} forks </Text>
-              <Text className='ml-5 flex flex-row items-center'>{element.stargazers_count}  <Icon className=''>star</Icon></Text>
-              </div>
+      <div className='flex flex-row justify-between items-center m-2 test-repo'>
+        <div className=' w-96'>
+        <Title>{element.name}</Title>
 
-      
-              <div className='bg-slate-400 rounded-md text-white flex flex-row p-1 w-96 h-12 '>
-                <Icon>assignment</Icon>
-                <Text className='bg-'>{element.clone_url}</Text>
-              </div>
-            </div>
-          </div>
+        <div className='flex flex-row'>
+        <Text className='ml-5'>{element.language}</Text>
+        <Text className='ml-5'>{element.updated_at}</Text>
         </div>
+
+        </div>
+        
+        <div className='border w-96 bg-gray-200 p-2 rounded-md flex flex-row justify-between'>
+          <div className='relative w-96'>
+          <Text>{element.clone_url}</Text>
+          </div>
+
+        <Icon>content_paste</Icon>
+        </div>
+
+        <div className=' w-48'>
+           star: {element.stargazers_count}  
+        </div> 
       </div>
     )
   }
@@ -64,7 +71,7 @@ function DetalhesProfile(props) {
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }} className='bg-slate-100 w-screen h-screen p-0 m-0 flex flex-row'>
       <div style={{ width: '20vw', height: '100vh' }} className='w-64 h-full bg-white'>
         {user &&
-          <Card className=' p-2 m-5 rounded-md shadow-md h-full justify-between flex flex-col'>
+          <Card >
             <div className='justify-center items-center flex flex-col w-full '>
               <img className='flex inline-block h-20 w-20 rounded-full ring-2 ring-white' src={user.avatar_url} />
               <div className='flex flex-col w-auto justify-center'>
@@ -96,10 +103,15 @@ function DetalhesProfile(props) {
           </Card>
         }
       </div>
+     
       <div style={{ width: '80vw', height: '100vh', }} className=' h-full p-0 m-0 overflow-y-auto overflow-x-hidden p-5'>
-        {repos ? repos.map((elment, index) => {
-          return RenderList(elment, index)
-        }) : null}
+        <div className='w-full p-2 flex flex-row' >
+        <Input placeholder='Filtrar ' />
+        
+        </div>  
+       {repos.map((element, index)=>{
+          return RenderList(element, index)
+       })}
       </div>
     </div>
   );

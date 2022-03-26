@@ -25,14 +25,15 @@ class Home extends View<User, string>{
   onGetBy = async (e: any) =>  this.getbyuser(e.target.value)
   
   carrousel = (data, index) => {
-    console.log(index)
-
-    return(
-      <div>
-          <img className=' h-20 w-20 rounded-full  ring-white' src={data[index].avatar_url} />
+    console.log(index/2)
+    data.map((element, index)=> {
+      if(data.length / 2 === index)
+     return <div>
+      <img className=' h-20 w-20 rounded-full  ring-white' src={data[index].avatar_url} />
 
       </div>
-    )
+    })
+    
   }
   next = (index)=>{
 
@@ -57,10 +58,10 @@ class Home extends View<User, string>{
           </div>
         </div>
         <div style={{width:'100%', overflow:'scroll'}} className='border'>
-        <button>
+        <button onClick={()=> this.next(1)}>
         next
         </button>
-        {this.state.data && this.carrousel(this.state.data, this.state.data.length / 2)}
+        {this.state.data && this.carrousel(this.state.data,  15)}
         <div className='flex flex-row'>
               {this.state.data && this.state.data.map((element, index)=>{
                 return (

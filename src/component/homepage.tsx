@@ -8,19 +8,16 @@ import { Surface, Card, Title, BoxRow, Text } from "./styleds";
 
 const HomePage = (props) => {
   const { value } = props
+
   console.log(value)
+
   const [name, setname] = useState<string>('');
   const [user, setUser] = useState(value)
-
-
 
   return (
     <>
       {value != null &&
-        <Card className='absolute bottom-0 p-2 w-96 m-5 rounded-md shadow-md   flex flex-col'
-          style={{
-
-          }}
+        <Card
         >
           <div className='flex flex-row items-center '>
             <div className='w-24'>

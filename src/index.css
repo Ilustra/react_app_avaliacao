@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Icons');
-
+@import url('https://fonts.googleapis.com/css2?family=Inspiration&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,4 +20,18 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.animate-grid {
+  animation-name: grid 2s ;
+}
+@keyframes grid {
+  from {
+    margin-left: 100%;
+    width: 300%
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
 }

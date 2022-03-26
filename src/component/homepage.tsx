@@ -3,21 +3,25 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { User } from "../model/User";
 import Icon from "./icon";
-import { Surface, Card, Title, BoxRow, Text } from "./styleds";
+import { Surface, Card, Title, BoxRow, Text, Transition } from "./styleds";
 
 
 const HomePage = (props) => {
-  const { value } = props
-  console.log(value)
+
+  let { value } = props
+
   const [name, setname] = useState<string>('');
   const [user, setUser] = useState(value)
 
-
-
+  if(value == null)
+    value = {}
   return (
     <>
-      {value != null &&
-        <Card className='absolute bottom-0 p-2 w-96 m-5 rounded-md shadow-md   flex flex-col'
+      <div className='absolute bottom-0'>
+      <Transition
+        
+      >
+        <Card className='bottom-0 p-2 w-96 m-5 rounded-md shadow-md   flex flex-col'
           style={{
 
           }}
@@ -71,7 +75,10 @@ const HomePage = (props) => {
           </div>
              */}
         </Card>
-      }
+        </Transition>
+      </div>
+     
+      
     </>
   );
 }

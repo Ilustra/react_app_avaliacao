@@ -31,12 +31,17 @@
 .App-link {
   color: #61dafb;
 }
-
-@keyframes App-logo-spin {
+.animate-grid {
+  animation-name: slidein 1s initial;
+}
+@keyframes grid {
   from {
-    transform: rotate(0deg);
+    margin-left: 100%;
+    width: 300%
   }
+
   to {
-    transform: rotate(360deg);
+    margin-left: 0%;
+    width: 100%;
   }
 }

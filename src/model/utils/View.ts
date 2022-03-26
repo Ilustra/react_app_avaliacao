@@ -22,16 +22,39 @@ export class View<T, ID> extends  Component<MyProps, Value> {
         this.setState({
             data: []
         })
-        this.listAll()
+  
+        this.getArray().then(response=>{
+            console.log('local', response[0])
+            if(!response.length  )
+                this.listAll()
+            else
+            this.setState({
+                list: response
+            })
+        }).catch(r=>{
+            this.listAll()
+        })
+
+        
+           
         
     }
+    getArray = async ()=>{
+        const result = JSON.parse(localStorage.getItem('list'));
+
+        return result.lista
+    }
     listAll(){
+        console.log('listAll')
         this.service.getAll().then(response=>{
             this.setState({
-                data: response.data
+                list: response.data
               })
+              localStorage.setItem('list', JSON.stringify({lista: response.data}));
+
+
         }).catch(error=>{
-            console.log(error);
+            this.setError(error)
         })
     }
     getbyuser(id: ID){
@@ -41,12 +64,15 @@ export class View<T, ID> extends  Component<MyProps, Value> {
               })
            
         }).catch(error=>{
-            const {response} = error
-            console.log(response)
-            this.setState({
-                error: response.data
-              })
+            this.setError(error)
+         
         })
+    }
+    setError(error){
+        const {response} = error
+        this.setState({
+            error: response.data
+          })
     }
 }
 

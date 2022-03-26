@@ -47,17 +47,51 @@
 }
 .test-repo{
   animation-delay: .1s;
-  animation: s .4s;
+  animation: animationRepo .4s;
 }
-@keyframes s {
+@keyframes animationRepo {
   from {
-    opacity: 0;
-    margin-left: -100;
-    margin-top: -250px
+    opacity: 0.4;
+    margin-left: -100px;
   }
   to {
     opacity: 1;
-    margin-left: 0;
-    margin-top: 0px;
+    margin-left: 0px;
+  }
+}
+
+.progress{
+  height: 5px;
+  width: auto;
+  position: absolute;
+  z-index: 100;
+  top:0px;
+  background-color: rgb(125, 196, 253);
+  animation: animationProgress .8s ease infinite;
+  animation-delay: .3s;
+}
+@keyframes animationProgress {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+
+.card-profile{
+  animation-delay: .1s;
+  animation: animationRepo .4s;
+}
+@keyframes animationProfile {
+  from {
+    opacity: 0;
+    margin-top: -100px;
+  }
+  to {
+    opacity: 1;
+    margin-left: 0px;
   }
 }

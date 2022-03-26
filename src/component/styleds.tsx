@@ -6,12 +6,12 @@ width: 100vw;
 
 background-image: linear-gradient(#fafafa, #fafafa,#fafafa);
 `;
-export const BoxRow = styled.div.attrs({ className: 'flex flex-row' })``
-export const Bottom = styled.button.attrs({ className: 'bg-primary rounded-md ' })``
+export const BoxRow = styled.div.attrs(props=> ({ className: 'flex flex-row' + props.className}))``
+export const Bottom = styled.button.attrs(props => ({ className: 'bg-primary rounded-md p-2 hover:bg-primary-100 ' + props.className}))``
 
-export const Input = styled.input.attrs({ className: ' p-2 rounded-md shadow-md w-full ' })``
-export const Card = styled.div.attrs(props => ({ className: ' bg-withe rounded-md shadow-md ' + props.className }))`
-background-color: #fff;
+export const Input = styled.input.attrs(props=> ({ className: ' p-2 rounded-md shadow-md w-full '+props.className }))``
+export const Card = styled.div.attrs(props => ({ className: ' bg-white rounded-md shadow-md ' + props.className }))`
+
 `
 export const Text = styled.p`
 font-size: 14px;
@@ -43,11 +43,7 @@ export const griid = keyframes`
 
 `
 export const Transition = styled.div`
-    animation-duration: 3s;
-    animation-delay: 3s;
-    animation-name: slidein;
-    position: absolute;
-    animation: ${render} 1s  ;
+
 
 `
 export const Grid = styled.div`
